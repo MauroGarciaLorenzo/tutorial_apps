@@ -70,19 +70,26 @@ def merge_two_dicts(dic1, dic2):
 
 
 if __name__ == "__main__":
+    print("11111111111111111111", flush=True)
     from pycompss.api.api import compss_wait_on
 
+    print("3333311111111111111111111", flush=True)
     # Start counting time...
     start_time = time.time()
-
+    print("2221111111111111111111", flush=True)
     # Get the dataset path
     path_to_yaml = sys.argv[1]
+    print("path to yaml:", path_to_yaml, flush=True)
     with open(path_to_yaml, 'r') as file:
         yaml_content = yaml.safe_load(file)
 
+    print("//////////////////////////7", flush=True)
+    print(yaml_content, flush=True)
     application_dict = yaml_content.get('application', {})
 
+    print("aplication", application_dict, flush=True)
     pathDataset = application_dict['pathDataset']
+    print("path dataset", pathDataset, flush=True)
     if not pathDataset.startswith("/"):
         home_dir = subprocess.run("echo $HOME", shell=True,
                                   capture_output=True,
