@@ -14,10 +14,11 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-
+import subprocess
 # -*- coding: utf-8 -*-
 
 import sys
+import yaml
 import os
 import time
 
@@ -75,7 +76,22 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # Get the dataset path
-    pathDataset = sys.argv[1]
+    path_to_yaml = sys.argv[1]
+    with open(path_to_yaml, 'r') as file:
+        yaml_content = yaml.safe_load(file)
+
+    application_dict = yaml_content.get('application', {})
+
+    pathDataset = application_dict['pathDataset']
+    if not pathDataset.startswith("/"):
+        home_dir = subprocess.run("echo $HOME", shell=True,
+                                  capture_output=True,
+                                  text=True).stdout.strip()
+        pathDataset = os.path.join(home_dir, pathDataset)
+    if not os.path.exists(pathDataset):
+        raise FileNotFoundError(f"Path dataset {pathDataset} not found")
+    else:
+        print("Path dataset:", pathDataset)
 
     # Construct a list with the file's paths from the dataset
     paths = []
