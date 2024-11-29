@@ -91,11 +91,12 @@ if __name__ == "__main__":
     if not os.path.exists(pathDataset):
         raise FileNotFoundError(f"Path dataset {pathDataset} not found")
     else:
-        print("Path dataset:", pathDataset)
+        print("Path dataset:", pathDataset, flush=True)
 
     # Construct a list with the file's paths from the dataset
     paths = []
     for fileName in os.listdir(pathDataset):
+        print("FILEEEEEE:", fileName, flush=True)
         paths.append(os.path.join(pathDataset, fileName))
 
     # Read file's content execute a wordcount on each of them
